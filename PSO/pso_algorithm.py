@@ -21,7 +21,7 @@ class PSO:
         for i in range(self.popu_size):
             for j in range(self.var_nums):
                 self.popu_x[i][j] = random.uniform(self.bound[0][j],self.bound[1][j])
-                self.popu_v[i][j] = random.uniform(0,1)
+                self.popu_v[i][j] = random.uniform(-1,1)
             self.p_best[i] = self.popu_x[i].copy()
             fit = self.fitness(self.popu_x[i])
             if fit>temp:
@@ -31,7 +31,7 @@ class PSO:
     def fitness(self,inp_var):
         x1 = inp_var[0]
         x2 = inp_var[1]
-        y = math.sin(x1)*x2**3 - math.cos(x2)*x1**2
+        y =(1+np.cos(12*(x1**2+x2**2)**0.5))/(.5*(x1**2+x2**2)+2)
         return y
 
     def update(self):
@@ -56,7 +56,6 @@ class PSO:
             print('最好的位置：{0[0]:.2f}  {0[1]:.2f}'.format(self.g_best))
             print('最大的函数值：{:.2f}'.format(self.fitness(self.g_best)))
         print("---- End of (successful) Searching ----")
-
         plt.figure()
         plt.title("Figure1")
         plt.xlabel("iterators", size=14)
@@ -65,13 +64,11 @@ class PSO:
         plt.plot(t, recordobj, color='b', linewidth=2)
         plt.show()
 
+
 if __name__ == '__main__':
-    times = 100
+    times = 500
     popsize = 100
-    low = [1, 1]
-    up = [30, 30]
+    low = [-10, -10]
+    up = [10, 10]
     pso = PSO(times, popsize, low, up)
     pso.main()
-
-
-
