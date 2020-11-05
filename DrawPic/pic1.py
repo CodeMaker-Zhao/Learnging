@@ -28,6 +28,7 @@ def fit(xlabel,ylabel,n):
     poly = np.polyfit(xlabel,ylabel,deg=n)
     z = np.polyval(poly,xlabel)
     return z
+    
 def drawPic(x,y,lw=5,lineCol='tab:orange',baseLineCol='r'):
     fig,ax = plt.subplots(1,4,sharey=True)
 
@@ -50,18 +51,18 @@ def drawPic(x,y,lw=5,lineCol='tab:orange',baseLineCol='r'):
     ax[0].set(ylim=(23.0,25.5))
     plt.show()
 
+if __name__=='__main__':
+    ratio,ratioTe = readCsv('sample1.csv','result1.csv',1)
+    d0,d0Te = readCsv('sample2.csv','result2.csv',2)
+    n,nTe = readCsv('sample3.csv','result3.csv',0)
+    d1,d1Te = readCsv('sample4.csv','result4.csv',3)
 
-ratio,ratioTe = readCsv('sample1.csv','result1.csv',1)
-d0,d0Te = readCsv('sample2.csv','result2.csv',2)
-n,nTe = readCsv('sample3.csv','result3.csv',0)
-d1,d1Te = readCsv('sample4.csv','result4.csv',3)
+    ratioZ = fit(ratio,ratioTe,1)
+    d0Z = fit(d0,d0Te,1)
+    nZ = fit(n,nTe,3)
+    d1Z =fit(d1,d1Te,1)
 
-ratioZ = fit(ratio,ratioTe,1)
-d0Z = fit(d0,d0Te,1)
-nZ = fit(n,nTe,3)
-d1Z =fit(d1,d1Te,1)
+    x = [ratio,d0,n,d1]
+    y = [ratioZ,d0Z,nZ,d1Z]
 
-x = [ratio,d0,n,d1]
-y = [ratioZ,d0Z,nZ,d1Z]
-
-drawPic(x,y)
+    drawPic(x,y)
